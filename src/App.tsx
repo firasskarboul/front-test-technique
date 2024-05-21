@@ -3,10 +3,15 @@ import './App.css'
 import MainLayout from './layouts/MainLayout'
 import { ACCESS_TYPES, ROUTES, routeComponents } from './constants/routes'
 import PrivateRoute from './components/PrivateRoute'
+import { useAuth } from './hooks/useAuth'
+import { useSelector } from 'react-redux'
+import { RootState } from './store/store'
 
 function App() {
 
-  const isAuthenticated = false
+  useAuth();
+
+  const { token } = useSelector((state: RootState) => state.auth);
 
   return (
     <>
@@ -21,7 +26,7 @@ function App() {
                 return (<Route
                   key={item.name}
                   path={item.route}
-                  element={<PrivateRoute element={element} isAuthenticated={isAuthenticated} />}
+                  element={<PrivateRoute element={element} isAuthenticated={token} />}
                 />)
               } else {
                 return <Route key={item.name} path={item.route} element={element} />;

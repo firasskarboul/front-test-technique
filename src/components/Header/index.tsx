@@ -1,6 +1,9 @@
 import React, { Fragment, useRef, useState } from 'react'
 import Logo from '../../assets/images/logo.svg'
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store/store';
+import { logout } from '../../store/slices/authSlice';
 import { ROUTES, ROUTE_TYPES } from '../../constants/routes';
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import { Bars3Icon, ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -10,12 +13,19 @@ import LoginModal from './Modals/LoginModal';
 
 const Header: React.FC = () => {
 
+    const dispatch = useDispatch();
+    const { token, email } = useSelector((state: RootState) => state.auth);
+
     const location = useLocation();
     const emailInputRef = useRef<HTMLInputElement>(null);
 
-    const [signedIn, setSignedIn] = useState(false)
-    const [openLoginModal, setOpenLoginModal] = useState(false);
-    const [openSignupModal, setOpenSignupModal] = useState(false);
+    const [signedIn, setSignedIn] = useState<boolean>(false)
+    const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
+    const [openSignupModal, setOpenSignupModal] = useState<boolean>(false);
+
+    const handleLogout = () => {
+        dispatch(logout());
+    };
 
     return (
         <div className="min-h-full">
@@ -55,11 +65,11 @@ const Header: React.FC = () => {
                                 <div className="hidden md:block">
                                     <div className="ml-4 flex items-center md:ml-6">
 
-                                        {signedIn ?
+                                        {token ?
                                             <Menu as="div" className="relative inline-block text-left">
                                                 <div>
                                                     <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-gray-100 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-400">
-                                                        Firas Karboul
+                                                        {email}
                                                         <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-100" aria-hidden="true" />
                                                     </MenuButton>
                                                 </div>
@@ -102,7 +112,7 @@ const Header: React.FC = () => {
                                                                                 focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                                                                 'block w-full px-4 py-2 text-left text-sm'
                                                                             )}
-                                                                            onClick={() => setSignedIn(false)}
+                                                                            onClick={handleLogout}
                                                                         >
                                                                             Sign out
                                                                         </button>
@@ -123,7 +133,6 @@ const Header: React.FC = () => {
                                                     setOpenSignupModal={setOpenSignupModal}
                                                     openLoginModal={openLoginModal}
                                                     setOpenLoginModal={setOpenLoginModal}
-                                                    setSignedIn={setSignedIn}
                                                     emailInputRef={emailInputRef}
                                                 />
 
@@ -138,7 +147,6 @@ const Header: React.FC = () => {
                                                     setOpenSignupModal={setOpenSignupModal}
                                                     openLoginModal={openLoginModal}
                                                     setOpenLoginModal={setOpenLoginModal}
-                                                    setSignedIn={setSignedIn}
                                                     emailInputRef={emailInputRef}
                                                 />
                                             </div>

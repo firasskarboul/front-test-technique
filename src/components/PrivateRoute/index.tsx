@@ -3,7 +3,7 @@ import AccessDenied from './AccessDenied';
 
 interface PrivateRouteProps {
     element: React.ReactElement;
-    isAuthenticated: boolean;
+    isAuthenticated: string | null;
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ element, isAuthenticated }) => {
