@@ -9,7 +9,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     return (
         <div>
             <Header />
-            <main className="p-4">
+            <main>
                 {children}
             </main>
         </div>

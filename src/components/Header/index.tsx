@@ -18,8 +18,7 @@ const Header: React.FC = () => {
 
     const location = useLocation();
     const emailInputRef = useRef<HTMLInputElement>(null);
-
-    const [signedIn, setSignedIn] = useState<boolean>(false)
+    
     const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
     const [openSignupModal, setOpenSignupModal] = useState<boolean>(false);
 
@@ -173,7 +172,7 @@ const Header: React.FC = () => {
                         <DisclosurePanel className="md:hidden">
                             <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
                                 {ROUTES.map(item => (
-                                    (item.type === ROUTE_TYPES.HEADER || signedIn) &&
+                                    (item.type === ROUTE_TYPES.HEADER || token) &&
                                     <DisclosureButton
                                         key={item.name}
                                         as="a"
@@ -190,10 +189,10 @@ const Header: React.FC = () => {
                             </div>
                             <div className="border-t border-red-300 pb-3">
                                 <div className="mt-3 space-y-1 px-2">
-                                    {signedIn ?
+                                    {token ?
                                         <DisclosureButton
                                             as="a"
-                                            onClick={() => setSignedIn(false)}
+                                            onClick={handleLogout}
                                             className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-red-500 hover:text-white"
                                         >
                                             Sign out

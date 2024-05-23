@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../store/store';
 import { signUp } from '../../../store/slices/authSlice';
 import { User } from "../../../types/auth";
-import { fetchUser } from "../../../services/authService";
 
 const SignupModal: React.FC<AuthModalProps> = ({ openSignupModal, setOpenSignupModal, openLoginModal, setOpenLoginModal, emailInputRef }) => {
     const [formData, setFormData] = useState<User>({ email: '', password: '' });
