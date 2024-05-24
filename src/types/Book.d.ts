@@ -10,6 +10,8 @@ export interface Book {
 export interface BookState {
   books: Book[];
   selectedBook: Book | null;
+  categories: string[];
+  publicationYears: string[];
   loading: boolean;
   error: string | null;
 }
