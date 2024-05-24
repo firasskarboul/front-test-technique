@@ -1,13 +1,22 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice';
+import bookReducer from './slices/bookSlice';
+import { BookState } from '../types/Book';
+import { AuthState } from '../types/auth';
 
-const store = configureStore({
-    reducer: {
-        auth: authReducer,
-    },
+const rootReducer = combineReducers({
+    books: bookReducer,
+    auth: authReducer,
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+const store = configureStore({
+    reducer: rootReducer
+});
+
+export type RootState = {
+    books: BookState;
+    auth: AuthState;
+}
 export type AppDispatch = typeof store.dispatch;
 
 export default store;

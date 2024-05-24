@@ -5,9 +5,12 @@ import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 interface HeaderProps {
     section: string;
+    options: any[];
+    onChange: (value: any) => void;
+    selectedValue: any;
 }
 
-const MobileFilterDialog: React.FC<HeaderProps> = ({ section }) => {
+const MobileFilterDialog: React.FC<HeaderProps> = ({ section, options, onChange, selectedValue }) => {
     return (
         <Disclosure as="div" className="border-t border-gray-200 px-4 py-6">
             {({ open }) => (
@@ -26,58 +29,40 @@ const MobileFilterDialog: React.FC<HeaderProps> = ({ section }) => {
                     </h3>
                     <DisclosurePanel className="pt-6">
                         <div className="space-y-6">
-                            {/* {section.options.map((option, optionIdx) => ( */}
-                            <div key={"option.value"} className="flex items-center">
+                            <div key={'all'} className="flex items-center">
                                 <input
-                                    id={`filter-mobile-${"section.id"}-${"optionIdx"}`}
-                                    name={`${"section.id"}[]`}
-                                    defaultValue={"value"}
-                                    type="checkbox"
-                                    defaultChecked={true}
-                                    className="h-4 w-4 rounded border-gray-300 text-red-500 focus:ring-red-400"
+                                    id={`filter-all-${section}`}
+                                    name={`${section}`}
+                                    type="radio"
+                                    checked={selectedValue === null}
+                                    className="h-4 w-4 rounded-xl border-gray-300 text-red-500 focus:ring-red-400"
+                                    onChange={() => onChange(null)}
                                 />
                                 <label
-                                    htmlFor={`filter-mobile-${"section.id"}-${"optionIdx"}`}
-                                    className="ml-3 min-w-0 flex-1 text-gray-500"
+                                    htmlFor={`filter-all-${section}`}
+                                    className="ml-3 text-sm text-gray-600"
                                 >
-                                    {"label"}
+                                    {"Show all"}
                                 </label>
                             </div>
-
-                            <div key={"option.value"} className="flex items-center">
-                                <input
-                                    id={`filter-mobile-${"section.id"}-${"optionIdx"}`}
-                                    name={`${"section.id"}[]`}
-                                    defaultValue={"value"}
-                                    type="checkbox"
-                                    defaultChecked={true}
-                                    className="h-4 w-4 rounded border-gray-300 text-red-500 focus:ring-red-400"
-                                />
-                                <label
-                                    htmlFor={`filter-mobile-${"section.id"}-${"optionIdx"}`}
-                                    className="ml-3 min-w-0 flex-1 text-gray-500"
-                                >
-                                    {"label"}
-                                </label>
-                            </div>
-
-                            <div key={"option.value"} className="flex items-center">
-                                <input
-                                    id={`filter-mobile-${"section.id"}-${"optionIdx"}`}
-                                    name={`${"section.id"}[]`}
-                                    defaultValue={"value"}
-                                    type="checkbox"
-                                    defaultChecked={true}
-                                    className="h-4 w-4 rounded border-gray-300 text-red-500 focus:ring-red-400"
-                                />
-                                <label
-                                    htmlFor={`filter-mobile-${"section.id"}-${"optionIdx"}`}
-                                    className="ml-3 min-w-0 flex-1 text-gray-500"
-                                >
-                                    {"label"}
-                                </label>
-                            </div>
-                            {/* ))} */}
+                            {options.map((option, optionIdx) => (
+                                <div key={optionIdx} className="flex items-center">
+                                    <input
+                                        id={`filter-${section}-${optionIdx}`}
+                                        name={`${section}`}
+                                        type="radio"
+                                        checked={section === "Availability" ? selectedValue === "1" : selectedValue === option}
+                                        className="h-4 w-4 rounded border-gray-300 text-red-500 focus:ring-red-400"
+                                        onChange={() => { section === "Availability" ? onChange("1") : onChange(option) }}
+                                    />
+                                    <label
+                                        htmlFor={`filter-${section}-${optionIdx}`}
+                                        className="ml-3 min-w-0 flex-1 text-gray-500"
+                                    >
+                                        {option}
+                                    </label>
+                                </div>
+                            ))}
                         </div>
                     </DisclosurePanel>
                 </>

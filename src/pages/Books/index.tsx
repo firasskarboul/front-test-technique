@@ -11,8 +11,11 @@ import LoadingComponent from '../../components/LoadingComponent'
 import formatDate from '../../utils/dateFormatter'
 import NoData from '../../assets/images/noData.jpg'
 import SelectDurationModal from '../../components/SelectDurationModal'
+import { useNavigate } from 'react-router-dom'
 
 const Books: React.FC = () => {
+  const navigate = useNavigate();
+
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [openDateModal, setOpenDateModal] = useState(false);
@@ -146,21 +149,24 @@ const Books: React.FC = () => {
                         />
                       </div>
 
-                      {/* <MobileFilterDialog
+                      <MobileFilterDialog
                         section="Category"
                         options={categories}
                         onChange={(value) => handleFilterChange('Category', value)}
+                        selectedValue={filters.category}
                       />
                       <MobileFilterDialog
                         section="Publication Year"
                         options={publicationYears}
-                        onChange={(value) => handleFilterChange('publishedyear', value)}
+                        onChange={(value) => handleFilterChange('publishedYear', value)}
+                        selectedValue={filters.publishedyear}
                       />
                       <MobileFilterDialog
                         section="Availability"
-                        options={["Show all books", "Show only available books"]}
+                        options={["Show only available books"]}
                         onChange={(value) => handleFilterChange('Availability', value)}
-                      /> */}
+                        selectedValue={filters.availability}
+                      />
                     </form>
                   </DialogPanel>
                 </TransitionChild>
@@ -250,7 +256,8 @@ const Books: React.FC = () => {
                                 books.map((book) => {
                                   var pubDate = formatDate(book.publishedAt)
                                   return (
-                                    <div className="max-w-[327px] rounded-3xl overflow-hidden shadow-lg relative cursor-pointer transform transition duration-300 ease-in-out hover:scale-105">
+                                    <div onClick={() => navigate(`${book.id}`)}
+                                      className="max-w-[327px] rounded-3xl overflow-hidden shadow-lg relative cursor-pointer transform transition duration-300 ease-in-out hover:scale-105">
                                       <div className='relative'>
                                         <img className="w-[327px] h-full object-cover scale-[110px]"
                                           src={"https://s3-alpha-sig.figma.com/img/242b/7bd7/bd5e5047576a5e06d152a6df39ed98be?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BzzJKyoZKk9PeyKC5Aa01ZbZZC5RM6I7NTkiIvpZoSuvu-R54M4Q5N5TxgPkAIqhqzfHMV0em4Dr0wJ1iK-utftmSqaTLd3PkUw288aaDtv4P-ncVl7JNTuustttcIZPwqoUnbYPU6Y8HHwJ-hR2TZEM1bxqXaXvmJLIF9nVBwcVPJktefuiu5IulirRMzjmw1kFSxNO10hHQoD9Wc8FYdVpCcENjjZMKyeDnDQ-8nF3HsGapumLLVzsJl~7lEBJQhsV8N-TobQW5beBNx88icdLs1rMBRpDmdPj7gztWvQbfARFafm3Kjz4591NgevCb~zUWRFztMWzPHHV29eKlw__"}

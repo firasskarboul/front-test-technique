@@ -6,6 +6,7 @@ import PrivateRoute from './components/PrivateRoute'
 import { useAuth } from './hooks/useAuth'
 import { useSelector } from 'react-redux'
 import { RootState } from './store/store'
+import BookDetails from './pages/Books/BookDetails'
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
                 return <Route key={item.name} path={item.route} element={element} />;
               }
             })}
+            <Route key={"details"} path="/books/:id" element={<BookDetails />} />
           </Routes>
         </MainLayout>
       </Router>
