@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchBookById } from '../../store/slices/bookSlice';
 import { AppDispatch, RootState } from '../../store/store';
 import { useParams } from 'react-router-dom';
-import formatDate from '../../utils/dateFormatter';
+import { formatDate } from '../../utils/dateFormatter';
 import LoadingComponent from '../../components/LoadingComponent';
 
 const BookDetails: React.FC = () => {

@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Button, Modal } from "flowbite-react";
 import Datepicker, { DateValueType } from "react-tailwindcss-datepicker";
 import { Book } from "../types/Book";
-import bookService from "../services/bookService";
 import { RootState } from "../store/store";
 import { useSelector } from "react-redux";
 import LoadingComponent from "./LoadingComponent";
-import formatDate from '../utils/dateFormatter'
+import { formatDateDay } from '../utils/dateFormatter'
+import bookingService from "../services/bookingService";
 
 interface ModalInterface {
     openModal: boolean;
@@ -76,7 +76,7 @@ const SelectDurationModal: React.FC<ModalInterface> = ({ openModal, setOpenModal
         }
 
         try {
-            const response = await bookService.loanBook(bookId, startDate.toString(), endDate.toString(), token);
+            const response = await bookingService.loanBook(bookId, startDate.toString(), endDate.toString(), token);
             setData(response);
             setError('');
         } catch (error: any) {
@@ -110,8 +110,8 @@ const SelectDurationModal: React.FC<ModalInterface> = ({ openModal, setOpenModal
 
                             <h1>Your booking details:</h1>
                             <h3>Book: {book.title}</h3>
-                            <h3>Starting from: {formatDate(data.booking.startDate)}</h3>
-                            <h3>Ending: {formatDate(data.booking.endDate)}</h3>
+                            <h3>Starting from: {formatDateDay(data.booking.startDate)}</h3>
+                            <h3>Ending: {formatDateDay(data.booking.endDate)}</h3>
                             <h3>Status: {data.booking.status}</h3>
                         </div>
                     }

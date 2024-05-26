@@ -1,6 +1,6 @@
 import React from 'react';
 import { Book } from '../../types/Book';
-import formatDate from '../../utils/dateFormatter';
+import { formatDate } from '../../utils/dateFormatter';
 import { useNavigate } from 'react-router-dom';
 
 interface BookCardProps {
@@ -8,6 +8,7 @@ interface BookCardProps {
     toggleWishlist: () => void;
     isInWishlist: boolean;
     children?: React.ReactNode;
+    // key?: number
 }
 
 const BookCard: React.FC<BookCardProps> = ({ book, toggleWishlist, isInWishlist, children }) => {

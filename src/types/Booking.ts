@@ -1,7 +1,17 @@
+import { Book } from "./Book";
+
 export interface Loan {
     bookId: number;
     startDate: string;
     endDate: string;
+}
+
+export interface Booking {
+    id: string;
+    book: Book;
+    startDate: string;
+    endDate: string;
+    status: string;
 }
 
 export interface BookingDetails {
